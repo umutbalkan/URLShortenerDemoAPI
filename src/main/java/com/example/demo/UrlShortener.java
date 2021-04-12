@@ -1,8 +1,12 @@
 package com.example.demo;
 import org.apache.commons.validator.UrlValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.http.HttpHeaders;
+import java.net.URI;
+import static org.springframework.http.HttpStatus.MOVED_PERMANENTLY;
 
 
 
@@ -15,12 +19,32 @@ public class UrlShortener {
     private UrlRepository urlRepository;
 
     @GetMapping("/{id}")
-    public String getUrl(@PathVariable String id){
+    public ResponseEntity<?> getUrl(@PathVariable String id){
         Url url = urlRepository.findByShortUrl(id);
         String last=  url.toString();
         System.out.println("URL Retrieved: " + last);
-        return last;
+        //return last;
+        //URI
+        //HttpHeaders
+        try {
+            URI uri = new URI(last);
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.setLocation(uri);
+            return new ResponseEntity<>(httpHeaders, MOVED_PERMANENTLY);
+        }catch (Exception e){
+            System.out.println (e.getMessage());
+            return null;
 
+        }
+
+
+
+        /*
+        URI uri = new URI(redirect.getUrl());
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setLocation(uri);
+        return new ResponseEntity<>(httpHeaders, MOVED_PERMANENTLY);
+        */
     }
 
     @PostMapping

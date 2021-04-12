@@ -17,8 +17,12 @@ public class Url {
     }
     @Override
     public String toString() {
+        /*
         return String.format(
                 "Url[id=%s, shortUrl= '%s', longUrl='%s']",id,shortUrl,longUrl
         );
+
+         */
+        return longUrl;
     }
 }
