@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.http.HttpHeaders;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
+
 import static org.springframework.http.HttpStatus.MOVED_PERMANENTLY;
 
 
@@ -17,6 +19,7 @@ public class UrlShortener {
 
     @Autowired
     private UrlRepository urlRepository;
+
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getUrl(@PathVariable String id){
@@ -37,6 +40,18 @@ public class UrlShortener {
 
         }
 
+    /*
+    @GetMapping("/{id}")
+    public String getUrl(@PathVariable String id){
+        Url url = urlRepository.findByShortUrl(id);
+        String last=  url.toString();
+        System.out.println("URL Retrieved: " + last);
+        //return last;
+        //URI
+        //HttpHeaders
+        return last;
+
+    */
 
 
         /*
@@ -52,9 +67,16 @@ public class UrlShortener {
         UrlValidator urlValidator = new UrlValidator(new String[]{"http","https"});
 
         if(true){
-            String shortId= shortId = RandomStringUtils.randomAlphanumeric(6);
+            String shortId=  RandomStringUtils.randomAlphanumeric(6);
             System.out.println("URL ID generated "+ shortId);
-            urlRepository.save(new Url(shortId,url));
+            String result = java.net.URLDecoder.decode(url, StandardCharsets.UTF_8);
+
+            if ( ( result.charAt(result.length() -1))== '=' ){
+                System.out.println("LAST CHARACTER IS = \n");
+                result = result.substring(0,result.length()-1);
+            }
+            System.out.println("Saving " + result  +" to database" + " result string  is = "+ result);
+            urlRepository.save(new Url(shortId,result));
             return shortId;
         }
         throw new RuntimeException("Invalid URL "+ url);
