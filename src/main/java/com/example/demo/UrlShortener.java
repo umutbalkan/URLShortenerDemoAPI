@@ -83,7 +83,7 @@ public class UrlShortener {
         */
     }
 
-    @PostMapping
+    /*@PostMapping
     public String create(@RequestBody String url){
         UrlValidator urlValidator = new UrlValidator(new String[]{"http","https"});
         if(urlValidator.isValid(url)){
@@ -100,6 +100,6 @@ public class UrlShortener {
             return shortId;
         }
         throw new RuntimeException("Invalid URL "+ url);
-    }
+    }*/
 
 }
