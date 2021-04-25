@@ -16,9 +16,7 @@ import java.nio.charset.StandardCharsets;
 
 import static org.springframework.http.HttpStatus.MOVED_PERMANENTLY;
 
-
-
-@RequestMapping("api/v1/")
+@RequestMapping("/api/v1/")
 @RestController
 public class UrlShortener {
     final int SHORT_ID_LENGTH =6;
@@ -62,25 +60,7 @@ public class UrlShortener {
         return shortURL;
     }
 
-   /* @GetMapping("/{id}")
-    public ResponseEntity<?> getUrl(@PathVariable String id){
-        Url url = urlRepository.findByShortUrl(id);
-        String last =  url.toString();
-        System.out.println("URL Retrieved: " + last);
-        //return last;
-        //UR    I
-        //HttpHeaders
-        try {
-            URI uri = new URI(last);
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.setLocation(uri);
-            return new ResponseEntity<>(httpHeaders, MOVED_PERMANENTLY);
-        }catch (Exception e){
-            System.out.println (e.getMessage());
-            return null;
 
-        }
-        */
     /*
     @GetMapping("/{id}")
     public String getUrl(@PathVariable String id){

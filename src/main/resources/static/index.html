@@ -201,7 +201,7 @@
                 <button class="login-button" type="button" id="btn-arrow"><i class="fa fa-chevron-right"></i></button>
             </div>
             <br>
-            <a><text class="display-6 mb-3 font-weight-semibold text-light" id="shortened"></text></a>
+            <a id="shortlink"><text class="display-8 mb-3 font-weight-semibold text-light" id="shortened"></text></a>
         </form>
     </div>
     <script>
@@ -210,7 +210,7 @@
 
             document.getElementById("btn-arrow").addEventListener("click", function () {
                 var longURL = document.getElementById("inputURL").value;
-
+            
                 let url = longURL;
 
                 (async () => {
@@ -222,7 +222,9 @@
                         body: url
                     });
                     rawResponse.text().then(function (text) {
-                        document.getElementById("shortened").innerHTML = "https://cryptic-forest-64327.herokuapp.com/" + text;
+                        var redir_lnk = "https://cryptic-forest-64327.herokuapp.com/r/" + text
+                        document.getElementById("shortened").innerHTML = redir_lnk;
+                        document.getElementById("shortlink").href = redir_lnk
                         console.log(text)
                     });
                 })();
