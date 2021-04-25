@@ -213,6 +213,7 @@
             
                 let url = longURL;
 
+                //$str = preg_replace('~^(?:\w+://)?(?:www\.)?~', "https://www.", $str);
                 (async () => {
                     const rawResponse = await fetch('api/v1/data/shorten/', {
                         method: 'POST',
