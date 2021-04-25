@@ -26,10 +26,10 @@ public class DemoApplication implements CommandLineRunner {
 		long uid_google = seqcr.nextId();
 		long uid_youtube = seqcr.nextId();
 		//repository.save(new Url(uid_google,"https://www.google.com/"));
-		repository.save(new Url(uid_youtube,"https://www.youtube.com/"));
+		//repository.save(new Url(uid_youtube,"https://www.youtube.com/"));
 		System.out.println(seqcr.toString());
 
-				
+		/*
 		Base62 base62 = Base62.createInstance();
 		System.out.println("URL found with uniqueID " + uid_youtube + ":");
 		System.out.println("--------------------------------");
@@ -39,6 +39,7 @@ public class DemoApplication implements CommandLineRunner {
 		System.out.println("URL found with shortURL " + shorturl_youtube + ":");
 		System.out.println("--------------------------------");
 		System.out.println(repository.findByShortUrl(shorturl_youtube));
+		*/
 	}
 
 }
