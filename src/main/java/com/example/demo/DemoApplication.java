@@ -25,7 +25,7 @@ public class DemoApplication implements CommandLineRunner {
 		//repository.deleteAll();
 		long uid_google = seqcr.nextId();
 		long uid_youtube = seqcr.nextId();
-		repository.save(new Url(uid_google,"https://www.google.com/"));
+		//repository.save(new Url(uid_google,"https://www.google.com/"));
 		repository.save(new Url(uid_youtube,"https://www.youtube.com/"));
 		System.out.println(seqcr.toString());
 

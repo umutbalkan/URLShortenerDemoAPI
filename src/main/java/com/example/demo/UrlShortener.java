@@ -1,11 +1,15 @@
 package com.example.demo;
 import org.apache.commons.validator.UrlValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.http.HttpHeaders;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
@@ -22,13 +26,29 @@ public class UrlShortener {
     @Autowired
     private UrlRepository urlRepository;
 
+    @GetMapping("links")
+    List<Url> all() {
+        return urlRepository.findAll();
+    }
+    /*
+    @GetMapping("url/{id}")
+    EntityModel<Url> one(@PathVariable Long id) {
 
+        Url url = urlRepository.findByUniqueID(id) //
+        .orElseThrow(() -> new UrlNotFoundException(id));
+
+    return EntityModel.of(url, //
+        linkTo(methodOn(UrlShortener.class).one(id)).withSelfRel(),
+        linkTo(methodOn(UrlShortener.class).all()).withRel("urls"));
+    }
+    */
 
     @PostMapping("data/shorten")
+    @ResponseBody
     public String shorten(@RequestBody String longURL) throws UnsupportedEncodingException{
-        UrlValidator urlValidator = new UrlValidator(new String[]{"http","https"});
+        //UrlValidator urlValidator = new UrlValidator();
         String shortURL = "";
-        if(urlValidator.isValid(longURL)){
+//       if(urlValidator.isValid(longURL)){
             if( urlRepository.findByLongUrl(longURL) != null){ // URL exists in db
                 shortURL = (urlRepository.findByLongUrl(longURL)).shortUrl;
             } else{  // does not exist in db, generate an unique id & save it to db
@@ -37,15 +57,15 @@ public class UrlShortener {
                 urlRepository.save(new_url);
                 shortURL = new_url.shortUrl;
             }
-        } // to-do: meaninful response
+        //} // to-do: meaninful response
         
         return shortURL;
     }
 
-    @GetMapping("/{id}")
+   /* @GetMapping("/{id}")
     public ResponseEntity<?> getUrl(@PathVariable String id){
         Url url = urlRepository.findByShortUrl(id);
-        String last=  url.toString();
+        String last =  url.toString();
         System.out.println("URL Retrieved: " + last);
         //return last;
         //UR    I
@@ -60,7 +80,7 @@ public class UrlShortener {
             return null;
 
         }
-
+        */
     /*
     @GetMapping("/{id}")
     public String getUrl(@PathVariable String id){
@@ -80,8 +100,9 @@ public class UrlShortener {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setLocation(uri);
         return new ResponseEntity<>(httpHeaders, MOVED_PERMANENTLY);
-        */
+        
     }
+    */
 
     /*@PostMapping
     public String create(@RequestBody String url){
