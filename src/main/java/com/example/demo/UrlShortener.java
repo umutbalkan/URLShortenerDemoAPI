@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 
 import static org.springframework.http.HttpStatus.MOVED_PERMANENTLY;
@@ -64,18 +65,22 @@ public class UrlShortener {
     @GetMapping("/{id}")
     public ResponseEntity<?> getUrl(@PathVariable String id){
         Url url = urlRepository.findByShortUrl(id);
-        String last=  url.toString();
+        String last=  url.longUrl;
         System.out.println("URL Retrieved: " + last);
         //return last;
         //URI
         //HttpHeaders
-        return last;
-
-        URI uri = new URI(redirect.getUrl());
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setLocation(uri);
-        return new ResponseEntity<>(httpHeaders, MOVED_PERMANENTLY);
-        
+        URI uri;
+        try {
+            uri = new URI(last);
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.setLocation(uri);
+            return new ResponseEntity<>(httpHeaders, MOVED_PERMANENTLY);
+        } catch (URISyntaxException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /*@PostMapping
