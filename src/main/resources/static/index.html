@@ -195,13 +195,20 @@
                 <br>
                 <p class="text-light"> Paste your `<code>longURL</code>` below and hit the arrow.</p>
             </div>
-            <div align="center" class="form-label-group ">
-                <input type="text" id="inputURL" class="form-control" name="inputURL" placeholder="Enter your long URL">
-
-                <button class="login-button" type="button" id="btn-arrow"><i class="fa fa-chevron-right"></i></button>
+            <div class="text-center form-label-group ">
+                <div align="center">
+                    <input type="text" id="inputURL" class="form-control" name="inputURL"
+                        placeholder="Enter your long URL">
+                    <button class="login-button" type="button" id="btn-arrow"><i
+                            class="fa fa-chevron-right"></i></button>
+                </div>
+                <div>
+                    <br>
+                    <a id="shortlink"><text class="display-8 mb-3 font-weight-semibold text-light"
+                            id="shortened">sadadssad</text></a>
+                </div>
             </div>
             <br>
-            <a id="shortlink"><text class="display-8 mb-3 font-weight-semibold text-light" id="shortened"></text></a>
         </form>
     </div>
     <script>
@@ -210,7 +217,7 @@
 
             document.getElementById("btn-arrow").addEventListener("click", function () {
                 var longURL = document.getElementById("inputURL").value;
-            
+
                 let url = longURL;
 
                 //$str = preg_replace('~^(?:\w+://)?(?:www\.)?~', "https://www.", $str);
@@ -259,25 +266,25 @@ skyContext.fill();
 }*/
     </script>
 
-    <script>/*
-$(document).ready(function () {
-$('#theform').validate({ // initialize the plugin
-rules: {
-inputField: {
-required: true,
-minlength: 2,
-maxlength: 32,
-}
-},
-messages: {
-inputField: {
-required: "Please provide a password",
-minlength: "Your password must be at least 5 characters long",
-maxlength: "Your password must be at least 5 characters long"
-}
-},
-});
-});*/
+    <script>
+        $(document).ready(function () {
+            $('#theform').validate({ // initialize the plugin
+                rules: {
+                    inputURL: {
+                        required: true,
+                        minlength: 16,
+                        maxlength: 2048,
+                    }
+                },
+                messages: {
+                    inputURL: {
+                        required: "Please provide a link",
+                        minlength: "Your link must be at least 16 characters long",
+                        maxlength: "Your link must be at most 2048 characters long"
+                    }
+                },
+            });
+        });
     </script>
 
 

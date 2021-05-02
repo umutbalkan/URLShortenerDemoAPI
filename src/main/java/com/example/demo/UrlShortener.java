@@ -61,9 +61,8 @@ public class UrlShortener {
     }
 
 
-    /*
     @GetMapping("/{id}")
-    public String getUrl(@PathVariable String id){
+    public ResponseEntity<?> getUrl(@PathVariable String id){
         Url url = urlRepository.findByShortUrl(id);
         String last=  url.toString();
         System.out.println("URL Retrieved: " + last);
@@ -72,17 +71,12 @@ public class UrlShortener {
         //HttpHeaders
         return last;
 
-    */
-
-
-        /*
         URI uri = new URI(redirect.getUrl());
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setLocation(uri);
         return new ResponseEntity<>(httpHeaders, MOVED_PERMANENTLY);
         
     }
-    */
 
     /*@PostMapping
     public String create(@RequestBody String url){
