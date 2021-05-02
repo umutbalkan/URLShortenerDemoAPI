@@ -63,23 +63,23 @@ public class UrlShortener {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getUrl(@PathVariable String id){
-        Url url = urlRepository.findByShortUrl(id);
-        String last=  url.longUrl;
-        System.out.println("URL Retrieved: " + last);
-        //return last;
-        //URI
-        //HttpHeaders
-        URI uri;
-        try {
-            uri = new URI(last);
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.setLocation(uri);
-            return new ResponseEntity<>(httpHeaders, MOVED_PERMANENTLY);
-        } catch (URISyntaxException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+    public ResponseEntity<?> getUrl(@PathVariable String shortUrl){
+        Url url = urlRepository.findByShortUrl(shortUrl);
+        if (url != null){
+            String longUrl =  url.longUrl;
+            System.out.println(shortUrl + " URL Redirected to -> " + longUrl);
+            try {
+                URI uri = new URI(longUrl);
+                HttpHeaders httpHeaders = new HttpHeaders();
+                httpHeaders.setLocation(uri);
+                return new ResponseEntity<>(httpHeaders, MOVED_PERMANENTLY);
+            }catch (Exception e){
+                System.out.println (e.getMessage());
+                return null;
+    
+            }
         }
+
         return null;
     }
 
